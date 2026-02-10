@@ -1,0 +1,2102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Antichrist - Music Player</title>
+  <meta name="description" content="Antichrist - The Final Algorithm. Revelation 11 Music For The End Times.">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#8b0000">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Antichrist">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="icon" href="favicon.ico">
+  <meta http-equiv="Content-Security-Policy" content="media-src 'self' https://*">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Quicksand:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --background: #0c0a1a;
+      --foreground: #f0e6ff;
+      --primary-purple: #7c3aed;
+      --deep-purple: #4c1d95;
+      --soft-pink: #f472b6;
+      --pastel-blue: #93c5fd;
+      --pastel-lavender: #c4b5fd;
+      --dream-indigo: #1e1145;
+      --gold-accent: #fbbf24;
+      --starlight: #f5f3ff;
+      --rainbow-start: #f472b6;
+      --rainbow-mid: #a78bfa;
+      --rainbow-end: #93c5fd;
+      --magic-glow: rgba(167, 139, 250, 0.4);
+      --spacing: 1rem;
+      --container-md: 448px;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    
+    body {
+      background: var(--background);
+      color: var(--foreground);
+      font-family: 'Quicksand', 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+    
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+    .w-full { width: 100%; }
+    .h-auto { height: auto; }
+    .mb-4 { margin-bottom: calc(.25rem * 4); }
+    .pb-12 { padding-bottom: calc(.25rem * 12); }
+    .px-4 { padding-inline: calc(.25rem * 4); }
+    .text-center { text-align: center; }
+    .max-w-md { max-width: 28rem; }
+    .mx-auto { margin-inline: auto; }
+    .flex { display: flex; }
+    .flex-col { flex-direction: column; }
+    .z-10 { z-index: 10; }
+    .overflow-hidden { overflow: hidden; }
+    .relative { position: relative; }
+    .min-h-screen { min-height: 100vh; }
+    
+    .rounded-2xl { border-radius: 1rem; }
+    
+    .shadow-lg {
+      box-shadow: 0 10px 15px -3px rgba(124, 58, 237, 0.15),
+                  0 4px 6px -2px rgba(124, 58, 237, 0.1);
+    }
+    
+    .shadow-blood-500\/20 {
+      box-shadow: 0 10px 15px -3px rgba(124, 58, 237, 0.2),
+                  0 4px 6px -2px rgba(167, 139, 250, 0.15);
+    }
+    
+    .border {
+      border-width: 1px;
+      border-style: solid;
+    }
+    
+    .border-blood-500\/20 {
+      border-color: rgba(167, 139, 250, 0.25);
+    }
+    
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      overflow: hidden;
+    }
+    
+    #bgVideo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      transform: translate(-50%, -50%);
+      object-fit: cover;
+    }
+    
+    .video-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(
+        180deg,
+        rgba(12, 10, 26, 0.6) 0%,
+        rgba(30, 17, 69, 0.7) 40%,
+        rgba(12, 10, 26, 0.85) 100%
+      );
+    }
+    
+    /* Floating sparkle particles */
+    .video-overlay::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: 
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 30% 60%, rgba(244,114,182,0.5), transparent),
+        radial-gradient(1.5px 1.5px at 50% 10%, rgba(167,139,250,0.6), transparent),
+        radial-gradient(1px 1px at 70% 40%, rgba(147,197,253,0.5), transparent),
+        radial-gradient(1px 1px at 90% 70%, rgba(251,191,36,0.4), transparent),
+        radial-gradient(1.5px 1.5px at 20% 80%, rgba(196,181,253,0.5), transparent),
+        radial-gradient(1px 1px at 60% 90%, rgba(244,114,182,0.4), transparent),
+        radial-gradient(1px 1px at 80% 15%, rgba(255,255,255,0.5), transparent);
+      background-size: 200px 200px;
+      animation: sparkleFloat 20s linear infinite;
+    }
+    
+    @keyframes sparkleFloat {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-200px); }
+    }
+    
+    .container {
+      position: relative; z-index: 1;
+      max-width: 1200px; margin: 0 auto; padding: 20px;
+    }
+    
+    header { text-align: center; padding: 40px 20px; }
+    
+    h1 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 3.2rem;
+      background: linear-gradient(135deg, #f9a8d4, #c4b5fd, #93c5fd, #fbbf24);
+      background-size: 300% 300%;
+      background-clip: text; -webkit-background-clip: text;
+      color: transparent; margin-bottom: 10px;
+      animation: rainbowShift 6s ease infinite;
+      text-shadow: none;
+      filter: drop-shadow(0 0 20px rgba(167, 139, 250, 0.3));
+    }
+    
+    @keyframes rainbowShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    
+    .subtitle {
+      color: var(--pastel-lavender);
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    
+    .lang-selector {
+      display: inline-block; padding: 8px 16px;
+      background: rgba(124, 58, 237, 0.2);
+      border: 1px solid rgba(167, 139, 250, 0.3);
+      border-radius: 20px; color: var(--foreground);
+      font-size: 0.9rem; cursor: pointer; transition: all 0.3s;
+      font-family: 'Quicksand', sans-serif;
+    }
+    .lang-selector:hover {
+      background: rgba(124, 58, 237, 0.35);
+      border-color: rgba(167, 139, 250, 0.5);
+      box-shadow: 0 0 15px rgba(167, 139, 250, 0.2);
+    }
+    
+    .track-count {
+      display: inline-block; margin-left: 10px;
+      color: rgba(196, 181, 253, 0.6); font-size: 0.85rem;
+    }
+    
+    .player {
+      background: linear-gradient(180deg, rgba(30, 17, 69, 0.92), rgba(76, 29, 149, 0.85));
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(167, 139, 250, 0.25);
+      border-radius: 28px; padding: 30px;
+      margin: 30px auto; max-width: 800px;
+      box-shadow: 
+        0 20px 60px rgba(124, 58, 237, 0.25),
+        0 0 80px rgba(167, 139, 250, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+    
+    .track-info { text-align: center; margin-bottom: 20px; }
+    
+    #trackTitle {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.4rem; color: var(--starlight); margin-bottom: 5px;
+      letter-spacing: 0.5px;
+    }
+    
+    .featured-badge, .alt-badge {
+      display: inline-block; padding: 4px 14px;
+      border-radius: 20px; font-size: 0.75rem; margin-top: 8px;
+      font-weight: 600;
+    }
+    .featured-badge {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(244, 114, 182, 0.15));
+      border: 1px solid rgba(251, 191, 36, 0.4);
+      color: var(--gold-accent);
+    }
+    .alt-badge {
+      background: rgba(167, 139, 250, 0.15);
+      border: 1px solid rgba(167, 139, 250, 0.35);
+      color: var(--pastel-lavender);
+    }
+    
+    #visualizer {
+      width: 100%; height: 80px; border-radius: 16px;
+      margin: 15px 0; background: rgba(12, 10, 26, 0.5);
+      border: 1px solid rgba(167, 139, 250, 0.1);
+    }
+    
+    /* Lyrics Panel */
+    .lyrics-panel {
+      margin: 15px 0;
+      border: 1px solid rgba(167, 139, 250, 0.15);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    
+    .lyrics-toggle {
+      width: 100%; padding: 12px 20px;
+      background: rgba(124, 58, 237, 0.15);
+      border: none; border-radius: 0;
+      color: var(--foreground); cursor: pointer;
+      font-size: 0.95rem; font-family: 'Quicksand', sans-serif;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: background 0.3s;
+      font-weight: 500;
+    }
+    .lyrics-toggle:hover { background: rgba(124, 58, 237, 0.25); }
+    .lyrics-toggle.open { background: rgba(251, 191, 36, 0.1); color: var(--gold-accent); }
+    
+    .lyrics-content {
+      max-height: 350px; overflow-y: auto;
+      padding: 20px; background: rgba(12, 10, 26, 0.5);
+      transition: max-height 0.3s;
+    }
+    .lyrics-content.hidden { max-height: 0; padding: 0 20px; overflow: hidden; }
+    
+    .lyrics-text { line-height: 1.8; font-size: 0.95rem; white-space: pre-wrap; }
+    .lyrics-text .section-header {
+      color: var(--gold-accent); font-weight: 600;
+      margin-top: 16px; margin-bottom: 4px;
+      font-family: 'Cinzel Decorative', serif; font-size: 0.8rem;
+    }
+    .lyrics-text .song-title {
+      color: var(--starlight); font-weight: 700;
+      font-size: 1.1rem; margin-bottom: 8px;
+    }
+    .lyrics-text .theme-line {
+      color: rgba(196, 181, 253, 0.5); font-style: italic;
+      margin-bottom: 12px;
+    }
+    .lyrics-loading {
+      text-align: center; padding: 30px; color: rgba(196, 181, 253, 0.5);
+    }
+    .lyrics-unavailable {
+      text-align: center; padding: 30px; color: rgba(196, 181, 253, 0.4);
+    }
+    
+    .controls {
+      display: flex; align-items: center;
+      justify-content: center; gap: 15px; margin: 20px 0;
+    }
+    
+    button {
+      background: linear-gradient(135deg, var(--deep-purple), var(--primary-purple));
+      border: 1px solid rgba(167, 139, 250, 0.35);
+      color: white; cursor: pointer; border-radius: 50%;
+      width: 50px; height: 50px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s; font-size: 1.2rem;
+    }
+    button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 25px rgba(167, 139, 250, 0.5);
+    }
+    button:active { transform: scale(0.95); }
+    
+    #playPauseBtn {
+      width: 70px; height: 70px; font-size: 1.8rem;
+      background: linear-gradient(135deg, var(--soft-pink), var(--primary-purple));
+      box-shadow: 0 4px 20px rgba(244, 114, 182, 0.3);
+    }
+    
+    .small-btn { width: 40px; height: 40px; font-size: 1rem; }
+    
+    button.active {
+      background: linear-gradient(135deg, var(--gold-accent), #f59e0b);
+      color: #1e1145;
+      box-shadow: 0 0 20px rgba(251, 191, 36, 0.4);
+    }
+    
+    .progress-container { margin: 15px 0; }
+    
+    .progress-bar {
+      width: 100%; height: 6px;
+      background: rgba(167, 139, 250, 0.15);
+      border-radius: 3px; cursor: pointer;
+      position: relative; overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--soft-pink), var(--pastel-lavender), var(--pastel-blue));
+      border-radius: 3px; width: 0%; transition: width 0.1s linear;
+    }
+    .time-display {
+      display: flex; justify-content: space-between;
+      margin-top: 8px; font-size: 0.85rem;
+      color: rgba(196, 181, 253, 0.6);
+    }
+    
+    .volume-control {
+      display: flex; align-items: center; gap: 10px; margin: 15px 0;
+    }
+    #volumeSlider {
+      flex: 1; height: 4px;
+      background: rgba(167, 139, 250, 0.15);
+      border-radius: 2px; outline: none; cursor: pointer;
+      accent-color: var(--pastel-lavender);
+    }
+    
+    .share-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin: 15px 0;
+      padding: 10px 0;
+      border-top: 1px solid rgba(167, 139, 250, 0.15);
+    }
+    
+    .share-label {
+      font-size: 0.9rem;
+      color: var(--foreground);
+      opacity: 0.8;
+      margin-right: 5px;
+    }
+    
+    .share-btn {
+      background: rgba(124, 58, 237, 0.12);
+      border: 1px solid rgba(167, 139, 250, 0.25);
+      color: var(--foreground);
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    
+    .share-btn:hover {
+      background: rgba(124, 58, 237, 0.25);
+      border-color: rgba(167, 139, 250, 0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(167, 139, 250, 0.2);
+    }
+    
+    .share-btn:active { transform: translateY(0); }
+    .share-btn svg { opacity: 0.9; }
+    .share-btn:hover svg { opacity: 1; }
+    
+    .track-list {
+      max-width: 1000px; margin: 40px auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    
+    .track-item {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(30, 17, 69, 0.2));
+      border: 1px solid rgba(167, 139, 250, 0.15);
+      border-radius: 16px; padding: 12px 15px;
+      cursor: pointer; transition: all 0.3s;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .track-item:hover {
+      transform: translateY(-2px);
+      border-color: rgba(167, 139, 250, 0.4);
+      box-shadow: 0 8px 25px rgba(124, 58, 237, 0.25);
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(30, 17, 69, 0.3));
+    }
+    .track-item.playing {
+      background: linear-gradient(135deg, rgba(244, 114, 182, 0.2), rgba(124, 58, 237, 0.3));
+      border-color: rgba(251, 191, 36, 0.5);
+      box-shadow: 0 0 20px rgba(244, 114, 182, 0.15);
+    }
+    .track-item.is-alt { opacity: 0.75; }
+    .track-item.is-alt:hover { opacity: 1; }
+    
+    .track-number {
+      font-family: 'Cinzel Decorative', serif;
+      color: var(--gold-accent); font-weight: 600;
+      min-width: 40px; font-size: 0.85rem;
+    }
+    .track-title { flex: 1; color: var(--foreground); font-size: 0.95rem; }
+    .track-alt-label {
+      font-size: 0.7rem; color: var(--pastel-lavender);
+      background: rgba(167, 139, 250, 0.15);
+      padding: 2px 6px; border-radius: 4px;
+    }
+    
+    .play-btn-small { width: 32px; height: 32px; font-size: 0.9rem; }
+    
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(124, 58, 237, 0.1); }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--soft-pink), var(--deep-purple));
+      border-radius: 3px;
+    }
+    
+    .download-section {
+      max-width: 800px; margin: 40px auto; padding: 30px;
+      background: linear-gradient(180deg, rgba(30, 17, 69, 0.92), rgba(76, 29, 149, 0.85));
+      backdrop-filter: blur(24px);
+      border: 1px solid rgba(167, 139, 250, 0.25);
+      border-radius: 28px;
+      box-shadow: 0 20px 60px rgba(124, 58, 237, 0.2);
+    }
+    .download-heading {
+      font-family: 'Cinzel Decorative', serif; font-size: 1.8rem;
+      background: linear-gradient(135deg, var(--starlight), var(--gold-accent), var(--soft-pink));
+      background-clip: text; -webkit-background-clip: text; color: transparent;
+      text-align: center; margin-bottom: 10px;
+    }
+    .download-description {
+      text-align: center; color: rgba(196, 181, 253, 0.7);
+      font-size: 1rem; margin-bottom: 30px;
+    }
+    .download-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .download-card {
+      background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(30, 17, 69, 0.25));
+      border: 1px solid rgba(167, 139, 250, 0.25);
+      border-radius: 20px; padding: 24px;
+      cursor: pointer; transition: all 0.3s;
+      text-decoration: none; color: inherit;
+      display: flex; flex-direction: column;
+      align-items: center; text-align: center;
+    }
+    .download-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(167, 139, 250, 0.5);
+      box-shadow: 0 12px 30px rgba(124, 58, 237, 0.3);
+    }
+    .download-icon {
+      width: 80px; height: 80px;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--soft-pink), var(--primary-purple));
+      border-radius: 50%; margin-bottom: 16px; color: white;
+      box-shadow: 0 4px 20px rgba(244, 114, 182, 0.3);
+    }
+    .download-info h3 {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.3rem; color: var(--starlight); margin-bottom: 8px;
+    }
+    .download-count {
+      font-size: 0.9rem;
+      color: rgba(196, 181, 253, 0.6);
+      margin-bottom: 4px;
+    }
+    .download-size {
+      font-size: 1.1rem; font-weight: 600; color: var(--gold-accent);
+    }
+    .cache-info {
+      margin-top: 10px; text-align: center;
+      font-size: 0.85rem; color: rgba(196, 181, 253, 0.5);
+    }
+    
+    .download-btn-small {
+      width: 32px; height: 32px;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(124, 58, 237, 0.12);
+      border: 1px solid rgba(167, 139, 250, 0.25);
+      border-radius: 50%; color: var(--foreground);
+      cursor: pointer; transition: all 0.2s;
+      text-decoration: none; flex-shrink: 0;
+    }
+    .download-btn-small:hover {
+      background: rgba(124, 58, 237, 0.25);
+      border-color: rgba(167, 139, 250, 0.45);
+      transform: translateY(-2px);
+    }
+    .offline-badge {
+      font-size: 0.65rem; color: #a78bfa;
+      background: rgba(167, 139, 250, 0.12);
+      padding: 2px 6px; border-radius: 4px;
+      display: inline-flex; align-items: center; gap: 3px;
+      margin-left: 8px;
+    }
+    
+    @media (max-width: 768px) {
+      h1 { font-size: 2rem; }
+      #trackTitle { font-size: 1.2rem; }
+      .track-list { grid-template-columns: 1fr; }
+      .controls { gap: 10px; }
+      #playPauseBtn { width: 60px; height: 60px; font-size: 1.5rem; }
+    }
+    
+    .cookie-consent {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(180deg, rgba(30, 17, 69, 0.98), rgba(76, 29, 149, 0.98));
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(167, 139, 250, 0.4);
+      padding: 20px;
+      z-index: 10000;
+      box-shadow: 0 -4px 30px rgba(124, 58, 237, 0.3);
+    }
+    
+    .cookie-content {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    
+    .cookie-content p {
+      color: var(--foreground);
+      margin: 0;
+      font-size: 0.95rem;
+      flex: 1;
+      min-width: 250px;
+    }
+    
+    .cookie-buttons {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .cookie-btn {
+      padding: 10px 24px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    
+    .cookie-btn.accept {
+      background: linear-gradient(135deg, var(--gold-accent), #f59e0b);
+      color: #1e1145;
+    }
+    
+    .cookie-btn.accept:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(251, 191, 36, 0.4);
+    }
+    
+    .cookie-btn.decline {
+      background: rgba(124, 58, 237, 0.2);
+      color: var(--foreground);
+      border: 1px solid rgba(167, 139, 250, 0.3);
+    }
+    
+    .cookie-btn.decline:hover {
+      background: rgba(124, 58, 237, 0.35);
+    }
+    
+    @media (max-width: 768px) {
+      .cookie-content {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    
+      .cookie-buttons {
+        width: 100%;
+      }
+    
+      .cookie-btn {
+        flex: 1;
+      }
+    }
+    
+    /* Footer Styles */
+    .site-footer {
+      background: linear-gradient(180deg, rgba(12, 10, 26, 0.98), #050311);
+      border-top: 2px solid rgba(167, 139, 250, 0.3);
+      padding: 3rem 2rem 2rem;
+      margin-top: 4rem;
+      position: relative;
+    }
+    
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 2fr));
+      gap: 2rem;
+    }
+    
+    .footer-section h3 {
+      color: var(--pastel-lavender);
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+    
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .footer-links a,
+    .footer-link-btn {
+      color: rgba(196, 181, 253, 0.7);
+      text-decoration: none;
+      transition: color 0.3s ease;
+      font-size: 0.95rem;
+      background: none;
+      border: none;
+      padding: 0;
+      text-align: left;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    
+    .footer-links a:hover,
+    .footer-link-btn:hover {
+      color: var(--gold-accent);
+    }
+    
+    .copyright {
+      color: rgba(196, 181, 253, 0.5);
+      font-size: 0.9rem;
+      margin-top: 1rem;
+    }
+    
+    @media (max-width: 768px) {
+      .site-footer {
+        padding: 2rem 1rem 1.5rem;
+      }
+    
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+    }
+    
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 9999;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .modal.active {
+      display: block;
+    }
+    
+    .modal-backdrop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(5, 3, 17, 0.85);
+      backdrop-filter: blur(6px);
+    }
+    
+    .modal-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, rgba(30, 17, 69, 0.98), rgba(76, 29, 149, 0.95));
+      border: 1px solid rgba(167, 139, 250, 0.35);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      max-width: 600px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(124, 58, 237, 0.3);
+      animation: slideUp 0.3s ease;
+    }
+    
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: rgba(124, 58, 237, 0.2);
+      border: 1px solid rgba(167, 139, 250, 0.3);
+      color: var(--foreground);
+      font-size: 1.5rem;
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+    
+    .modal-close:hover {
+      background: rgba(244, 114, 182, 0.3);
+      transform: rotate(90deg);
+    }
+    
+    .modal-content h2 {
+      color: var(--pastel-lavender);
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      padding-right: 2rem;
+      font-family: 'Cinzel Decorative', serif;
+    }
+    
+    .modal-content h3 {
+      color: var(--gold-accent);
+      font-size: 1.3rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+    
+    .modal-section {
+      margin-bottom: 1.5rem;
+    }
+    
+    .modal-section p {
+      color: rgba(196, 181, 253, 0.85);
+      line-height: 1.6;
+      margin-bottom: 0.75rem;
+    }
+    
+    .modal-section ul {
+      color: rgba(196, 181, 253, 0.85);
+      line-height: 1.8;
+      padding-left: 1.5rem;
+    }
+    
+    .modal-section li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .modal-section a {
+      color: var(--gold-accent);
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    
+    .modal-section a:hover {
+      color: #fcd34d;
+    }
+    
+    /* Wallet Address Styles */
+    .wallet-address {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      background: rgba(12, 10, 26, 0.5);
+      border: 1px solid rgba(167, 139, 250, 0.2);
+      border-radius: 0.75rem;
+      padding: 0.75rem;
+      margin: 0.75rem 0;
+    }
+    
+    .wallet-address code {
+      flex: 1;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      color: var(--foreground);
+      word-break: break-all;
+    }
+    
+    .copy-btn {
+      background: rgba(124, 58, 237, 0.3);
+      border: 1px solid rgba(167, 139, 250, 0.35);
+      color: var(--foreground);
+      padding: 0.5rem 2rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      white-space: nowrap;
+    }
+    
+    .copy-btn:hover {
+      background: rgba(124, 58, 237, 0.45);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(167, 139, 250, 0.2);
+    }
+    
+    .copy-btn.copied {
+      background: rgba(16, 185, 129, 0.3);
+      border-color: rgba(16, 185, 129, 0.5);
+    }
+    
+    .donate-link {
+      display: inline-block;
+      background: rgba(124, 58, 237, 0.25);
+      border: 1px solid rgba(167, 139, 250, 0.35);
+      color: var(--foreground);
+      padding: 0.75rem 1.5rem;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      margin-top: 0.5rem;
+    }
+    
+    .donate-link:hover {
+      background: rgba(124, 58, 237, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(167, 139, 250, 0.2);
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from {
+        transform: translate(-50%, -40%);
+        opacity: 0;
+      }
+      to {
+        transform: translate(-50%, -50%);
+        opacity: 1;
+      }
+    }
+    
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .modal-content {
+        width: 95%;
+        padding: 1.5rem;
+        max-height: 90vh;
+      }
+    
+      .modal-content h2 {
+        font-size: 1.5rem;
+      }
+    
+      .modal-content h3 {
+        font-size: 1.1rem;
+      }
+    
+      .wallet-address {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    
+      .wallet-address code {
+        font-size: 0.8rem;
+      }
+    
+      .copy-btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+    
+    /* Scrollbar Styling for Modal Content */
+    .modal-content::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .modal-content::-webkit-scrollbar-track {
+      background: rgba(12, 10, 26, 0.3);
+      border-radius: 4px;
+    }
+    
+    .modal-content::-webkit-scrollbar-thumb {
+      background: rgba(167, 139, 250, 0.4);
+      border-radius: 4px;
+    }
+    
+    .modal-content::-webkit-scrollbar-thumb:hover {
+      background: rgba(167, 139, 250, 0.6);
+    }
+    
+    /* Unicorn image gallery hint */
+    .unicorn-gallery {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .unicorn-gallery img {
+      border-radius: 16px;
+      border: 2px solid rgba(167, 139, 250, 0.2);
+      transition: all 0.3s;
+    }
+    .unicorn-gallery img:hover {
+      border-color: rgba(244, 114, 182, 0.5);
+      transform: scale(1.03);
+      box-shadow: 0 8px 25px rgba(244, 114, 182, 0.2);
+    }
+      </style>
+  <script type="text/javascript">
+    // Query parameter handling
+    function parseUrlParams() {
+      const params = new URLSearchParams(window.location.search);
+      return {
+        language: params.get('l') || 'en',
+        trackId: params.get('t') ? parseInt(params.get('t'), 10) : null
+      };
+    }
+
+    function updateUrlParams(trackId) {
+      const url = new URL(window.location);
+      url.searchParams.set('l', state.language);
+      if (trackId !== null && trackId !== undefined) {
+        const track = state.tracks[trackId];
+        if (track) {
+          url.searchParams.set('t', track.i);
+        }
+      } else {
+        url.searchParams.delete('t');
+      }
+      window.history.replaceState({}, '', url);
+    }
+
+    function getShareUrl(trackId) {
+      const url = new URL(window.location.origin + window.location.pathname);
+      url.searchParams.set('l', state.language);
+      const track = state.tracks[trackId];
+      if (track) {
+        url.searchParams.set('t', track.i);
+      }
+      return url.toString();
+    }
+
+    // Modal management
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+
+        // ESC key to close
+        document.addEventListener('keydown', handleEscKey);
+      }
+    }
+
+    function closeModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.classList.remove('active');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        document.removeEventListener('keydown', handleEscKey);
+      }
+    }
+
+    function handleEscKey(e) {
+      if (e.key === 'Escape') {
+        const activeModal = document.querySelector('.modal.active');
+        if (activeModal) {
+          closeModal(activeModal.id);
+        }
+      }
+    }
+
+    // Copy to clipboard with feedback
+    async function copyToClipboard(text, button) {
+      try {
+        await navigator.clipboard.writeText(text);
+
+        // Visual feedback
+        const originalText = button.querySelector('.copy-text').textContent;
+        button.querySelector('.copy-text').textContent = 'Copied!';
+        button.classList.add('copied');
+
+        setTimeout(() => {
+          button.querySelector('.copy-text').textContent = originalText;
+          button.classList.remove('copied');
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy:', err);
+        button.querySelector('.copy-text').textContent = 'Failed';
+        setTimeout(() => {
+          button.querySelector('.copy-text').textContent = 'Copy';
+        }, 2000);
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="video-background">
+    <img id="bgVideo" src="background.webp" />
+    <div class="video-overlay"></div>
+  </div>
+
+  <div class="container" style="margin-top: 33%; margin-bottom: 33%;">
+    <header>
+      <h1>Unicorns</h1>
+      <p class="subtitle">Greatest Of All Time - greatest.web3</p>
+      <select class="lang-selector" id="langSelector">
+        <option value="en">English</option>
+      </select>
+      <span class="track-count" id="trackCount">16/9 tracks</span>
+    </header>
+
+    <div class="player">
+      <div class="track-info">
+        <div id="trackTitle">Select a track to play</div>
+        <div id="trackBadges"></div>
+      </div>
+
+      <canvas id="visualizer"></canvas>
+
+      <div class="lyrics-panel">
+        <button class="lyrics-toggle" id="lyricsToggle">
+          <span>Lyrics</span>
+          <span id="lyricsIcon">▼</span>
+        </button>
+        <div class="lyrics-content hidden" id="lyricsContent">
+          <div class="lyrics-text" id="lyricsText">
+            <div class="lyrics-unavailable">Select a track to see lyrics</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="small-btn" id="shuffleBtn" title="Shuffle">🔀</button>
+        <button id="prevBtn">⏮</button>
+        <button id="playPauseBtn">▶</button>
+        <button id="nextBtn">⏭</button>
+        <button class="small-btn" id="repeatBtn" title="Repeat">🔁</button>
+      </div>
+
+      <div class="progress-container">
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <div class="time-display">
+          <span id="currentTime">0:00</span>
+          <span id="duration">0:00</span>
+        </div>
+      </div>
+
+      <div class="volume-control">
+        <span>🔊</span>
+        <input type="range" id="volumeSlider" min="0" max="100" value="70">
+        <button class="small-btn" id="muteBtn">🔇</button>
+      </div>
+
+      <div class="share-controls">
+        <span class="share-label">Share:</span>
+        <button class="share-btn" id="shareTwitter" title="Share on Twitter">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+        </button>
+        <button class="share-btn" id="shareFacebook" title="Share on Facebook">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+        </button>
+        <button class="share-btn" id="shareWhatsapp" title="Share on WhatsApp">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        </button>
+        <button class="share-btn" id="shareCopy" title="Copy link">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+        </button>
+      </div>
+
+      <div class="cache-info">
+        <span id="cacheInfo">Offline: 0 tracks cached</span>
+        <button id="clearCacheBtn" class="small-btn" style="margin-left:10px; padding:4px 12px; border-radius:8px;">Clear Cache</button>
+      </div>
+    </div>
+
+    <div class="track-list" id="trackList"></div>
+
+    <div class="download-section">
+      <h2 class="download-heading">Download Album</h2>
+      <p class="download-description">Get the complete Antichrist album with all tracks and lyrics</p>
+      <div class="download-grid">
+        <a href="https://www.dropbox.com/scl/fi/acltu285avorozjlln69c/Antichrist.zip?rlkey=4te91chzt4rscmljtbp8h5ge6&st=j8z707ze&dl=0" class="download-card">
+          <div class="download-icon">
+            <svg width="40" height="40" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+            </svg>
+          </div>
+          <div class="download-info">
+            <h3>Complete Album</h3>
+            <p class="download-count">16 Tracks</p>
+            <p class="download-size">~65 MB</p>
+          </div>
+        </a>
+      </div>
+    </div>
+    
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>Sister Sites</h3>
+        <div class="footer-links">
+          <a href="https://88888888.life" target="_blank" rel="noopener">88888888.life</a>
+          <a href="https://videos.zzzdaily.com" target="_blank" rel="noopener">Videos</a>
+          <a href="https://images.zzzdaily.com" target="_blank" rel="noopener">Images</a>
+          <a href="https://tracks.zzzdaily.com" target="_blank" rel="noopener">Tracks</a>
+          <a href="https://blog.zzzdaily.com" target="_blank" rel="noopener">Blog</a>
+          <a href="../oil/" rel="noopener">Oil</a>
+          <a href="../confliction/" rel="noopener">Confliction</a>
+          <a href="ipfs://666.web3/" rel="noopener">666.web3</a>
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <h3>Information</h3>
+        <div class="footer-links">
+          <button onclick="openModal('aboutModal')" class="footer-link-btn">About</button>
+          <button onclick="openModal('donateModal')" class="footer-link-btn">Donate</button>
+          <button onclick="openModal('termsModal')" class="footer-link-btn">Terms of Service</button>
+          <button onclick="openModal('privacyModal')" class="footer-link-btn">Privacy Policy</button>
+        </div>
+      </div>
+
+      <div class="footer-section">
+        <p class="copyright">&copy; 2026 ZZZDaily. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- About Modal -->
+  <div id="aboutModal" class="modal" role="dialog" aria-labelledby="aboutModalTitle" aria-hidden="true">
+    <div class="modal-backdrop" onclick="closeModal('aboutModal')"></div>
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('aboutModal')" aria-label="Close modal">&times;</button>
+      <h2 id="aboutModalTitle">About This Site</h2>
+
+      <div class="modal-section">
+        <h3>Web3 Decentralized Music Platform</h3>
+        <p>This site is built on web3 technology, utilizing IPFS (InterPlanetary File System) for truly decentralized content delivery. All music, lyrics, and metadata are stored on a distributed network, ensuring permanent accessibility and censorship resistance.</p>
+      </div>
+
+      <div class="modal-section">
+        <h3>LoadIPFS.web3 Tool</h3>
+        <p>This site was generated and deployed using the <strong>loadipfs.web3</strong> tool, a custom deployment system for creating immutable, distributed web applications. The tool handles:</p>
+        <ul>
+          <li>Content packaging and IPFS pinning</li>
+          <li>Metadata generation and indexing</li>
+          <li>Progressive Web App (PWA) manifest creation</li>
+          <li>Decentralized hosting and distribution</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <h3>Sister Sites Network</h3>
+        <p>Part of the ZZZDaily network of decentralized content platforms:</p>
+        <ul>
+          <li><a href="https://88888888.life" target="_blank">88888888.life</a> - Main portal</li>
+          <li><a href="https://videos.zzzdaily.com" target="_blank">Videos</a> - Video content</li>
+          <li><a href="https://images.zzzdaily.com" target="_blank">Images</a> - Image gallery</li>
+          <li><a href="https://tracks.zzzdaily.com" target="_blank">Tracks</a> - Music tracks</li>
+          <li><a href="../oil/">Oil</a> - Revelation 11 music</li>
+          <li><a href="../confliction/">Confliction</a> - Additional tracks</li>
+          <li><a href="../666.web3/">666.web3</a> - Web3 content</li>
+        </ul>
+      </div>
+
+      <div class="modal-section" style="border-top: 1px solid rgba(139, 0, 0, 0.3); padding-top: 1.5rem; margin-top: 2rem;">
+        <h3>Site Metadata & Version History</h3>
+
+        <p style="font-size: 0.9rem; margin-bottom: 1rem;"><strong>Current Version:</strong></p>
+        <div class="wallet-address" style="margin-bottom: 1.5rem;">
+          <code style="font-size: 0.75rem;">QmPWrG4PV7gmsM9p4me9bxPYCwtapttv9PtTshJvPy5RdM</code>
+          <button onclick="copyToClipboard('QmPWrG4PV7gmsM9p4me9bxPYCwtapttv9PtTshJvPy5RdM', this)" class="copy-btn" aria-label="Copy CID">
+            <span class="copy-icon">📋</span>
+            <span class="copy-text">Copy</span>
+          </button>
+        </div>
+
+        <p style="font-size: 0.85rem; color: rgba(224, 231, 255, 0.7); margin-bottom: 1rem;">
+          <strong>Published:</strong> February 9, 2026 at 12:00 UTC<br>
+          <strong>Protocol:</strong> IPFS (InterPlanetary File System)<br>
+          <strong>Network:</strong> Decentralized peer-to-peer storage<br>
+          <strong>Tracks:</strong> 22 audio files + lyrics<br>
+          <strong>Total Size:</strong> ~65 MB
+        </p>
+
+        <p style="font-size: 0.9rem; margin-bottom: 0.75rem;"><strong>Version History:</strong></p>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <a href="https://ipfs.io/ipfs/QmaiwpH7P52ZWbUu1DwSvjLjAtbpQCrZojHJ22hXW4y5Gj/" target="_blank" class="donate-link" style="padding: 0.5rem 1rem; font-size: 0.85rem; margin: 0;">
+            <span style="opacity: 0.7;">←</span> Previous (698.web3)
+          </a>
+          <a href="https://ipfs.io/ipfs/QmQrB77q1Z4yYSfueGsipE8CSLRb9Ky1Mr3FkCwUVnrpCh/" target="_blank" class="donate-link" style="padding: 0.5rem 1rem; font-size: 0.85rem; margin: 0;">
+            Next (asteroid.pack) <span style="opacity: 0.7;">→</span>
+          </a>
+        </div>
+
+        <p style="font-size: 0.75rem; color: rgba(224, 231, 255, 0.5); margin-top: 1.5rem; font-style: italic;">
+          All versions are permanently stored on IPFS and accessible via their unique Content Identifier (CID). Click the links above to explore previous and next deployments of this site.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Donate Modal -->
+  <div id="donateModal" class="modal" role="dialog" aria-labelledby="donateModalTitle" aria-hidden="true">
+    <div class="modal-backdrop" onclick="closeModal('donateModal')"></div>
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('donateModal')" aria-label="Close modal">&times;</button>
+      <h2 id="donateModalTitle">Support This Project</h2>
+
+      <div class="modal-section">
+        <p>Your support helps maintain and expand this decentralized music platform. Donations go toward hosting, development, and content creation.</p>
+      </div>
+
+      <div class="modal-section">
+        <h3>Bitcoin (BTC)</h3>
+        <div class="wallet-address">
+          <img src="BTC.gif" />
+          <code>bc1q29fj9f8nv4cjgxp3gpedrznhc548fqvczjk03x</code>
+          <button onclick="copyToClipboard('bc1q29fj9f8nv4cjgxp3gpedrznhc548fqvczjk03x', this)" class="copy-btn" aria-label="Copy Bitcoin address">
+            <span class="copy-icon">📋</span>
+            <span class="copy-text">Copy</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>Ethereum (ETH)</h3>
+        <div class="wallet-address">
+          <img src="ETH.gif" />
+          <code>0x507A5f6b786D44Aa324Cee16e645FA51Ed522aC2</code>
+          <button onclick="copyToClipboard('0x507A5f6b786D44Aa324Cee16e645FA51Ed522aC2', this)" class="copy-btn" aria-label="Copy Ethereum address">
+            <span class="copy-icon">📋</span>
+            <span class="copy-text">Copy</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>Solana (SOL)</h3>
+        <div class="wallet-address">
+          <div class="">
+            <img src="SOL.gif" />
+          </div>
+          <code>37q4SYfPrigwySEgb9i8YmpHKiAMKXuHKjqwLnABzf8i</code>
+          <button onclick="copyToClipboard('37q4SYfPrigwySEgb9i8YmpHKiAMKXuHKjqwLnABzf8i', this)" class="copy-btn" aria-label="Copy Solana address">
+            <span class="copy-icon">📋</span>
+            <span class="copy-text">Copy</span>
+          </button>
+        </div>
+      </div>
+
+      
+    </div>
+  </div>
+
+  <!-- Terms of Service Modal -->
+  <div id="termsModal" class="modal" role="dialog" aria-labelledby="termsModalTitle" aria-hidden="true">
+    <div class="modal-backdrop" onclick="closeModal('termsModal')"></div>
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('termsModal')" aria-label="Close modal">&times;</button>
+      <h2 id="termsModalTitle">Terms of Service</h2>
+
+      <div class="modal-section">
+        <h3>1. Acceptance of Terms</h3>
+        <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
+      </div>
+
+      <div class="modal-section">
+        <h3>2. Use License</h3>
+        <p>Permission is granted to temporarily stream and cache music content for personal, non-commercial use only. This is the grant of a license, not a transfer of title.</p>
+      </div>
+
+      <div class="modal-section">
+        <h3>3. Content Restrictions</h3>
+        <p>You may not:</p>
+        <ul>
+          <li>Redistribute, sell, or commercially exploit the content</li>
+          <li>Use automated systems to download content in bulk</li>
+          <li>Attempt to circumvent any content protection measures</li>
+          <li>Remove copyright or attribution notices</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <h3>4. Decentralized Hosting</h3>
+        <p>This site utilizes IPFS and decentralized hosting. Content availability depends on network nodes and pinning services. We make no guarantees of continuous availability.</p>
+      </div>
+
+      <div class="modal-section">
+        <h3>5. Disclaimer</h3>
+        <p>The materials on this website are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim all other warranties.</p>
+      </div>
+
+      <div class="modal-section">
+        <h3>6. Limitations</h3>
+        <p>In no event shall ZZZDaily or its suppliers be liable for any damages arising out of the use or inability to use the materials on this website.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Privacy Policy Modal -->
+  <div id="privacyModal" class="modal" role="dialog" aria-labelledby="privacyModalTitle" aria-hidden="true">
+    <div class="modal-backdrop" onclick="closeModal('privacyModal')"></div>
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal('privacyModal')" aria-label="Close modal">&times;</button>
+      <h2 id="privacyModalTitle">Privacy Policy</h2>
+
+      <div class="modal-section">
+        <h3>Information We Collect</h3>
+        <p>This site uses minimal data collection:</p>
+        <ul>
+          <li><strong>Local Storage:</strong> Track preferences, playback state, and volume settings stored locally in your browser</li>
+          <li><strong>Cookies:</strong> Cookie consent preferences stored locally</li>
+          <li><strong>Analytics:</strong> If you consent, Google Analytics collects anonymous usage data</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <h3>How We Use Information</h3>
+        <p>Locally stored data is used exclusively to:</p>
+        <ul>
+          <li>Remember your playback preferences</li>
+          <li>Maintain your language selection</li>
+          <li>Resume playback from where you left off</li>
+        </ul>
+        <p>No personal information is transmitted to our servers. All preferences are stored in your browser only.</p>
+      </div>
+
+      <div class="modal-section">
+        <h3>Third-Party Services</h3>
+        <p><strong>Google Analytics:</strong> If you consent to cookies, Google Analytics may collect anonymous usage statistics including pages visited, time spent, and browser type. This helps us understand how the site is used.</p>
+        <p><strong>IPFS Network:</strong> Content is delivered via decentralized IPFS nodes. Your IP address may be visible to nodes serving content, inherent to peer-to-peer networks.</p>
+      </div>
+
+      <div class="modal-section">
+        <h3>Data Security</h3>
+        <p>Since we don't collect personal data, there's minimal risk. Local browser storage is controlled by you and can be cleared anytime via browser settings.</p>
+      </div>
+
+      <div class="modal-section">
+        <h3>Your Rights</h3>
+        <p>You have the right to:</p>
+        <ul>
+          <li>Decline cookie consent (site works fully without analytics)</li>
+          <li>Clear local storage at any time via browser settings</li>
+          <li>Use the site completely anonymously</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <h3>Changes to Privacy Policy</h3>
+        <p>We may update this policy. Continued use after changes constitutes acceptance of the updated policy.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cookie-consent" id="cookieConsent" style="display: none;">
+    <div class="cookie-content">
+      <p>This site uses minimal analytics to improve your experience. We respect your privacy.</p>
+      <div class="cookie-buttons">
+        <button class="cookie-btn accept" id="cookieAccept">Accept</button>
+        <button class="cookie-btn decline" id="cookieDecline">Decline</button>
+      </div>
+    </div>
+  </div>
+
+  <audio id="audioElement" preload="metadata" crossorigin="anonymous"></audio>
+
+  <script>
+const FEATURED_ID = 21;
+const LANG_NAMES = {
+  en: 'English'
+};
+
+const state = {
+  hostname: window.location.hostname,
+  language: 'en',
+  tracks: [],
+  currentIndex: -1,
+  isPlaying: false,
+  shuffle: false,
+  repeat: 0,
+  volume: 0.7,
+  shuffleOrder: [],
+  lyricsOpen: false
+};
+
+let audioContext, analyser, dataArray, bufferLength, audioSource;
+const audio = document.getElementById('audioElement');
+const bgVideo = document.getElementById('bgVideo');
+
+// Video background initialization
+function initVideo() {
+  bgVideo.addEventListener('loadeddata', () => {
+    bgVideo.play().catch(err => {
+      console.log('Video autoplay prevented:', err);
+    });
+  });
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) {
+      bgVideo.pause();
+    } else {
+      bgVideo.play();
+    }
+  });
+}
+
+// Audio context initialization
+function initAudioContext() {
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioContext.createAnalyser();
+    analyser.fftSize = 256;
+    bufferLength = analyser.frequencyBinCount;
+    dataArray = new Uint8Array(bufferLength);
+
+    if (!audioSource) {
+      audioSource = audioContext.createMediaElementSource(audio);
+      audioSource.connect(analyser);
+      analyser.connect(audioContext.destination);
+    }
+
+    drawVisualizer();
+  }
+}
+
+// Visualizer
+function drawVisualizer() {
+  const canvas = document.getElementById('visualizer');
+  const ctx = canvas.getContext('2d');
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+
+  function draw() {
+    requestAnimationFrame(draw);
+
+    if (!analyser) return;
+
+    analyser.getByteFrequencyData(dataArray);
+
+    ctx.fillStyle = 'rgba(10, 0, 0, 0.5)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    const barWidth = (canvas.width / bufferLength) * 2.5;
+    let x = 0;
+
+    for (let i = 0; i < bufferLength; i++) {
+      const barHeight = (dataArray[i] / 255) * canvas.height * 0.8;
+
+      const r = 139 + (dataArray[i] / 2);
+      const g = 0;
+      const b = dataArray[i] / 3;
+
+      ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+      ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+
+      x += barWidth + 1;
+    }
+  }
+
+  draw();
+}
+
+// Load tracks
+function loadTracks() {
+  state.tracks = window.TRACKS[state.language] || [];
+  renderTrackList();
+  updateTrackCount();
+}
+
+function updateTrackCount() {
+  const count = state.tracks.filter(t => t.a === 0).length;
+  document.getElementById('trackCount').textContent = `${count} tracks`;
+}
+
+function renderTrackList() {
+  const container = document.getElementById('trackList');
+  container.innerHTML = '';
+
+  state.tracks.forEach((track, index) => {
+    const div = document.createElement('div');
+    div.className = 'track-item' + (track.a === 1 ? ' is-alt' : '');
+    if (index === state.currentIndex) div.classList.add('playing');
+
+    div.innerHTML = `
+      <div class="track-number">${track.i}</div>
+      <div class="track-title">${track.t}</div>
+      ${track.a === 1 ? '<span class="track-alt-label">ALT</span>' : ''}
+      <span class="offline-badge" data-track="tracks-${state.language}-${track.f}" style="display:none">
+        <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M10.5 8a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
+          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z"/>
+        </svg>
+        Offline
+      </span>
+      <button class="play-btn-small">${index === state.currentIndex && state.isPlaying ? '⏸' : '▶'}</button>
+      <a href="${state.hostname === '666.web3' ? `${track.d}tracks-${state.language}-${track.f}` : `tracks-${state.language}-${track.f}`}" download="${track.f}" class="download-btn-small" title="Download" onclick="event.stopPropagation()">
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M8 12L3 7h3V1h4v6h3z"/>
+          <path d="M1 14h14v2H1z"/>
+        </svg>
+      </a>
+    `;
+
+    div.addEventListener('click', (e) => {
+      // Prevent playback if download button or its SVG was clicked
+      if (e.target.closest('.download-btn-small')) {
+        return;
+      }
+      playTrack(index);
+    });
+
+    container.appendChild(div);
+  });
+
+  // After rendering all tracks, update offline indicators
+  updateOfflineIndicators();
+}
+
+// Play track with fallback CID loading
+function playTrack(index) {
+  if (!audioContext) initAudioContext();
+
+  state.currentIndex = index;
+  const track = state.tracks[index];
+
+  // Fallback CID chain for resilient loading
+  const fallbackCIDs = [
+    track.d, // Primary CID (from track data)
+    ''  // asteroid.pilot
+  ];
+
+  let currentFallback = 0;
+
+  function tryLoadAudio() {
+    if (currentFallback < fallbackCIDs.length) {
+      const cidUrl = fallbackCIDs[currentFallback];
+      audio.src = `${cidUrl}tracks-${state.language}-${track.f}`;
+      console.log(`Attempting to load from CID ${currentFallback + 1}/${fallbackCIDs.length}: ${cidUrl}`);
+
+      audio.onerror = function(e) {
+        console.log(`Failed to load from ${cidUrl}, trying next fallback...`);
+        currentFallback++;
+        tryLoadAudio();
+      };
+
+      audio.onloadeddata = function() {
+        console.log(`✓ Successfully loaded from: ${cidUrl}`);
+        audio.onerror = null;
+        audio.onloadeddata = null;
+      };
+
+      audio.play().catch(() => {
+        // Play might fail, but that's okay - let the error handler deal with it
+      });
+    } else {
+      // All CID attempts failed, try relative path as final fallback
+      console.log('All CID attempts failed, trying relative path...');
+      audio.src = `tracks-${state.language}-${track.f}`;
+      audio.onerror = function(e) {
+        console.error('❌ All loading attempts failed for track:', track.f);
+      };
+      audio.play().catch(() => {
+        console.error('Failed to play from relative path');
+      });
+    }
+  }
+
+  // Start the fallback chain
+  tryLoadAudio();
+
+  state.isPlaying = true;
+
+  updateTrackInfo();
+  renderTrackList();
+  loadLyricsWithFallback(track, state.language, fallbackCIDs);
+  updateUrlParams(index);
+  saveState();
+
+  // Update cache indicators after track starts playing
+  setTimeout(() => {
+    updateCacheInfo();
+    updateOfflineIndicators();
+  }, 1000);
+}
+
+function updateTrackInfo() {
+  const track = state.tracks[state.currentIndex];
+  if (!track) {
+    document.getElementById('trackTitle').textContent = 'Select a track to play';
+    document.getElementById('trackBadges').innerHTML = '';
+    return;
+  }
+
+  document.getElementById('trackTitle').textContent = track.t;
+
+  let badges = '';
+  if (track.i === FEATURED_ID) {
+    badges += '<span class="featured-badge">FEATURED</span>';
+  }
+  if (track.a === 1) {
+    badges += '<span class="alt-badge">ALTERNATE</span>';
+  }
+  document.getElementById('trackBadges').innerHTML = badges;
+
+  document.getElementById('playPauseBtn').textContent = '⏸';
+}
+
+// Lyrics with fallback CID loading
+async function loadLyricsWithFallback(track, lang, fallbackCIDs) {
+  const lyricsText = document.getElementById('lyricsText');
+  lyricsText.innerHTML = '<div class="lyrics-loading">Loading lyrics...</div>';
+
+  const lyricsMap = LYRICS[lang];
+  if (!lyricsMap || !lyricsMap[track.i]) {
+    lyricsText.innerHTML = '<div class="lyrics-unavailable">Lyrics not available for this track</div>';
+    return;
+  }
+
+  const filename = lyricsMap[track.i];
+
+  // Try each fallback CID in order
+  for (let i = 0; i < fallbackCIDs.length; i++) {
+    try {
+      const cidUrl = fallbackCIDs[i];
+      console.log(`Attempting to load lyrics from CID ${i + 1}/${fallbackCIDs.length}: ${cidUrl}`);
+      const resp = await fetch(`${cidUrl}lyrics-${lang}-${filename}`);
+
+      if (resp.ok) {
+        const text = await resp.text();
+        lyricsText.innerHTML = `<pre>${text}</pre>`;
+        console.log(`✓ Successfully loaded lyrics from: ${cidUrl}`);
+        return;
+      }
+    } catch (err) {
+      console.log(`Failed to load lyrics from fallback ${i + 1}, trying next...`);
+    }
+  }
+
+  // All CID attempts failed, try relative path as final fallback
+  try {
+    console.log('All CID attempts failed for lyrics, trying relative path...');
+    const resp = await fetch(`lyrics-${lang}-${filename}`);
+    if (resp.ok) {
+      const text = await resp.text();
+      lyricsText.innerHTML = `<pre>${text}</pre>`;
+      console.log('✓ Successfully loaded lyrics from relative path');
+      return;
+    }
+  } catch (err) {
+    console.error('❌ All loading attempts failed for lyrics');
+  }
+
+  lyricsText.innerHTML = '<div class="lyrics-unavailable">Could not load lyrics</div>';
+}
+
+// Keep old function for backward compatibility (used in language selector)
+async function loadLyrics(track, lang) {
+  const fallbackCIDs = [
+    track.d,
+    ''
+  ];
+  await loadLyricsWithFallback(track, lang, fallbackCIDs);
+}
+
+// Playback controls
+document.getElementById('playPauseBtn').addEventListener('click', () => {
+  if (state.currentIndex === -1 && state.tracks.length > 0) {
+    playTrack(0);
+    return;
+  }
+
+  if (!audioContext) initAudioContext();
+
+  if (state.isPlaying) {
+    audio.pause();
+    state.isPlaying = false;
+    document.getElementById('playPauseBtn').textContent = '▶';
+  } else {
+    audio.play();
+    state.isPlaying = true;
+    document.getElementById('playPauseBtn').textContent = '⏸';
+  }
+  saveState();
+});
+
+document.getElementById('nextBtn').addEventListener('click', () => {
+  if (state.tracks.length === 0) return;
+
+  let nextIndex;
+  if (state.shuffle && state.shuffleOrder.length > 0) {
+    const currentPos = state.shuffleOrder.indexOf(state.currentIndex);
+    nextIndex = state.shuffleOrder[(currentPos + 1) % state.shuffleOrder.length];
+  } else {
+    nextIndex = (state.currentIndex + 1) % state.tracks.length;
+  }
+
+  playTrack(nextIndex);
+});
+
+document.getElementById('prevBtn').addEventListener('click', () => {
+  if (state.tracks.length === 0) return;
+
+  if (audio.currentTime > 3) {
+    audio.currentTime = 0;
+    return;
+  }
+
+  let prevIndex;
+  if (state.shuffle && state.shuffleOrder.length > 0) {
+    const currentPos = state.shuffleOrder.indexOf(state.currentIndex);
+    prevIndex = state.shuffleOrder[(currentPos - 1 + state.shuffleOrder.length) % state.shuffleOrder.length];
+  } else {
+    prevIndex = (state.currentIndex - 1 + state.tracks.length) % state.tracks.length;
+  }
+
+  playTrack(prevIndex);
+});
+
+// Shuffle
+document.getElementById('shuffleBtn').addEventListener('click', () => {
+  state.shuffle = !state.shuffle;
+  document.getElementById('shuffleBtn').classList.toggle('active', state.shuffle);
+
+  if (state.shuffle) {
+    state.shuffleOrder = [...Array(state.tracks.length).keys()];
+    for (let i = state.shuffleOrder.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [state.shuffleOrder[i], state.shuffleOrder[j]] = [state.shuffleOrder[j], state.shuffleOrder[i]];
+    }
+  } else {
+    state.shuffleOrder = [];
+  }
+  saveState();
+});
+
+// Repeat
+document.getElementById('repeatBtn').addEventListener('click', () => {
+  state.repeat = (state.repeat + 1) % 3;
+  const btn = document.getElementById('repeatBtn');
+
+  if (state.repeat === 0) {
+    btn.classList.remove('active');
+    btn.textContent = '🔁';
+  } else if (state.repeat === 1) {
+    btn.classList.add('active');
+    btn.textContent = '🔁';
+  } else {
+    btn.classList.add('active');
+    btn.textContent = '🔂';
+  }
+  saveState();
+});
+
+// Audio ended
+audio.addEventListener('ended', () => {
+  if (state.repeat === 2) {
+    audio.currentTime = 0;
+    audio.play();
+  } else if (state.repeat === 1 || state.currentIndex < state.tracks.length - 1) {
+    document.getElementById('nextBtn').click();
+  } else {
+    state.isPlaying = false;
+    document.getElementById('playPauseBtn').textContent = '▶';
+  }
+
+  // Pre-cache the next track
+  preCacheNextTrack();
+});
+
+// Progress bar
+audio.addEventListener('timeupdate', () => {
+  const progress = (audio.currentTime / audio.duration) * 100;
+  document.getElementById('progressFill').style.width = `${progress}%`;
+  document.getElementById('currentTime').textContent = formatTime(audio.currentTime);
+});
+
+audio.addEventListener('loadedmetadata', () => {
+  document.getElementById('duration').textContent = formatTime(audio.duration);
+});
+
+document.getElementById('progressBar').addEventListener('click', (e) => {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const percent = (e.clientX - rect.left) / rect.width;
+  audio.currentTime = percent * audio.duration;
+});
+
+function formatTime(seconds) {
+  if (isNaN(seconds)) return '0:00';
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+// Volume
+const volumeSlider = document.getElementById('volumeSlider');
+volumeSlider.addEventListener('input', (e) => {
+  state.volume = e.target.value / 100;
+  audio.volume = state.volume;
+  saveState();
+});
+audio.volume = state.volume;
+
+document.getElementById('muteBtn').addEventListener('click', () => {
+  if (audio.volume > 0) {
+    audio.volume = 0;
+    volumeSlider.value = 0;
+  } else {
+    audio.volume = state.volume;
+    volumeSlider.value = state.volume * 100;
+  }
+});
+
+// Lyrics toggle
+document.getElementById('lyricsToggle').addEventListener('click', () => {
+  state.lyricsOpen = !state.lyricsOpen;
+  const content = document.getElementById('lyricsContent');
+  const toggle = document.getElementById('lyricsToggle');
+  const icon = document.getElementById('lyricsIcon');
+
+  content.classList.toggle('hidden', !state.lyricsOpen);
+  toggle.classList.toggle('open', state.lyricsOpen);
+  icon.textContent = state.lyricsOpen ? '▲' : '▼';
+
+  saveState();
+});
+
+// Share buttons
+document.getElementById('shareTwitter').addEventListener('click', () => {
+  const url = encodeURIComponent(window.location.href);
+  const text = encodeURIComponent('Check out Antichrist - The Final Algorithm');
+  window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
+});
+
+document.getElementById('shareFacebook').addEventListener('click', () => {
+  const url = encodeURIComponent(window.location.href);
+  window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+});
+
+document.getElementById('shareWhatsapp').addEventListener('click', () => {
+  const url = encodeURIComponent(window.location.href);
+  const text = encodeURIComponent('Check out Antichrist - The Final Algorithm');
+  window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
+});
+
+document.getElementById('shareCopy').addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(window.location.href);
+    const btn = document.getElementById('shareCopy');
+    btn.style.background = 'rgba(16, 185, 129, 0.3)';
+    setTimeout(() => {
+      btn.style.background = '';
+    }, 1000);
+  } catch (err) {
+    console.log('Failed to copy:', err);
+  }
+});
+
+// Clear cache button
+document.getElementById('clearCacheBtn')?.addEventListener('click', async () => {
+  if (confirm('Clear all cached audio and lyrics? This will free up space but you\'ll need to re-download tracks for offline use.')) {
+    try {
+      await caches.delete('antichrist-v1.0.0-audio');
+      await caches.delete('antichrist-v1.0.0-lyrics');
+      alert('✅ Cache cleared successfully!');
+      updateCacheInfo();
+      updateOfflineIndicators();
+    } catch (e) {
+      alert('❌ Failed to clear cache: ' + e.message);
+    }
+  }
+});
+
+// State persistence
+function saveState() {
+  localStorage.setItem('antichrist_state', JSON.stringify({
+    language: state.language,
+    currentIndex: state.currentIndex,
+    shuffle: state.shuffle,
+    repeat: state.repeat,
+    volume: state.volume,
+    lyricsOpen: state.lyricsOpen
+  }));
+}
+
+function loadState() {
+  try {
+    const saved = localStorage.getItem('antichrist_state');
+    if (saved) {
+      const data = JSON.parse(saved);
+      state.language = data.language || 'en';
+      state.currentIndex = data.currentIndex || -1;
+      state.shuffle = data.shuffle || false;
+      state.repeat = data.repeat || 0;
+      state.volume = data.volume || 0.7;
+      state.lyricsOpen = data.lyricsOpen || false;
+
+      audio.volume = state.volume;
+      volumeSlider.value = state.volume * 100;
+
+      if (state.shuffle) {
+        document.getElementById('shuffleBtn').classList.add('active');
+      }
+
+      if (state.repeat > 0) {
+        const btn = document.getElementById('repeatBtn');
+        btn.classList.add('active');
+        btn.textContent = state.repeat === 2 ? '🔂' : '🔁';
+      }
+
+      if (state.lyricsOpen) {
+        document.getElementById('lyricsContent').classList.remove('hidden');
+        document.getElementById('lyricsToggle').classList.add('open');
+        document.getElementById('lyricsIcon').textContent = '▲';
+      }
+    }
+  } catch (err) {
+    console.log('Failed to load state:', err);
+  }
+}
+
+// Service worker
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js').then(() => {
+    console.log('Service Worker registered');
+    updateCacheInfo();
+    updateOfflineIndicators();
+  }).catch(err => {
+    console.log('Service Worker registration failed:', err);
+  });
+}
+
+async function updateCacheInfo() {
+  try {
+    if (!navigator.serviceWorker.controller) return;
+
+    const cachedCount = await new Promise((resolve) => {
+      const channel = new MessageChannel();
+      channel.port1.onmessage = (event) => {
+        resolve(event.data.audioCount || 0);
+      };
+      navigator.serviceWorker.controller.postMessage({type: 'getCacheInfo'}, [channel.port2]);
+    });
+
+    document.getElementById('cacheInfo').innerHTML =
+      `Offline: <span style="color: #10b981">${cachedCount}</span> tracks cached`;
+  } catch (err) {
+    console.log('Failed to get cache info:', err);
+  }
+}
+
+// Update offline indicators on track list
+async function updateOfflineIndicators() {
+  if (!('caches' in window)) return;
+  try {
+    const cache = await caches.open('antichrist-v1.0.0-audio');
+    const requests = await cache.keys();
+    const cachedFiles = requests.map(req => new URL(req.url).pathname.split('/').pop());
+
+    document.querySelectorAll('.offline-badge').forEach(badge => {
+      const trackFile = badge.getAttribute('data-track');
+      badge.style.display = cachedFiles.includes(trackFile) ? 'inline-flex' : 'none';
+    });
+  } catch (e) {
+    console.log('Failed to update offline indicators:', e);
+  }
+}
+
+// Pre-cache next track for offline playback
+function preCacheNextTrack() {
+  if (!('serviceWorker' in navigator) || !navigator.serviceWorker.controller) return;
+
+  const nextIndex = state.shuffle
+    ? Math.floor(Math.random() * state.tracks.length)
+    : (state.currentIndex + 1) % state.tracks.length;
+
+  if (nextIndex >= 0 && nextIndex < state.tracks.length) {
+    const nextTrack = state.tracks[nextIndex];
+    // Use full IPFS URL format, matching what playTrack uses
+    const url = `${nextTrack.d}tracks-${state.language}-${nextTrack.f}`;
+
+    navigator.serviceWorker.controller.postMessage({
+      action: 'preCacheTrack',
+      url: url
+    });
+  }
+}
+
+// Cookie consent
+function initCookieConsent() {
+  const consent = localStorage.getItem('cookie_consent');
+  if (!consent) {
+    document.getElementById('cookieConsent').style.display = 'block';
+  }
+}
+
+document.getElementById('cookieAccept').addEventListener('click', () => {
+  localStorage.setItem('cookie_consent', 'accepted');
+  document.getElementById('cookieConsent').style.display = 'none';
+});
+
+document.getElementById('cookieDecline').addEventListener('click', () => {
+  localStorage.setItem('cookie_consent', 'declined');
+  document.getElementById('cookieConsent').style.display = 'none';
+});
+
+(async function () {
+  try {
+    const resp = await fetch(`tracks.json`);
+    if (resp.ok) {
+      window.TRACKS = await resp.json();
+    }
+  } catch (err) {
+    console.error(`Failed to load tracks.json`);
+  }
+  try {
+    const resp = await fetch(`lyrics.json`);
+    if (resp.ok) {
+      window.LYRICS = await resp.json();
+    }
+  } catch (err) {
+    console.error(`Failed to load lyrics.json`);
+  }
+  // Initialize
+  initVideo();
+  loadState();
+  loadTracks();
+  initCookieConsent();
+})()
+
+// Load from URL parameters after tracks are loaded
+const urlParams = parseUrlParams();
+if (urlParams.trackId !== null) {
+  // Find track by ID
+  const trackIndex = state.tracks.findIndex(t => t.i === urlParams.trackId);
+  if (trackIndex !== -1) {
+    // Delay playback slightly to ensure everything is loaded
+    setTimeout(() => {
+      playTrack(trackIndex);
+    }, 500);
+  }
+}
+
+// Language selector
+document.getElementById('langSelector').addEventListener('change', (e) => {
+  state.language = e.target.value;
+  loadTracks();
+  if (state.currentIndex !== -1) {
+    const track = state.tracks[state.currentIndex];
+    if (track) {
+      loadLyrics(track, state.language);
+    }
+  }
+  saveState();
+});
+  </script>
+</body>
+</html>
