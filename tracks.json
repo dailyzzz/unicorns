@@ -16,5 +16,61 @@
         {"i": 2, "t": "Единороги веселы, они дарят нам радость Alt", "f": "unicorns-2.mp3", "a": 0, "n": "greatest.web3"},
         {"i": 3, "t": "Единороги веселы, они дарят нам радость Alt 2", "f": "unicorns-3.mp3", "a": 0, "n": "greatest.web3"},
         {"i": 4, "t": "Единороги веселы, они дарят нам радость Alt 3", "f": "unicorns-4.mp3", "a": 0, "n": "greatest.web3"}
+    ],
+    "de": [
+        {"i": 1, "t": "Die Einhörner sind lustig voll Magie", "f": "unicorns-1.mp3", "a": 0, "n": "greatest.web3"},
+        {"i": 2, "t": "Die Einhörner sind lustig voll Magie Alt", "f": "unicorns-2.mp3", "a": 0, "n": "greatest.web3"}
+    ],
+    "fr": [
+        {"i": 1, "t": "Les licornes joyeuses nous offrent leur plaisir", "f": "unicorns-1.mp3", "a": 0, "n": "greatest.web3"},
+        {"i": 2, "t": "Les licornes joyeuses nous offrent leur plaisir Alt", "f": "unicorns-2.mp3", "a": 0, "n": "greatest.web3"}
+    ],
+    "zh": [
+        {"i": 1, "t": "独角兽带来无尽快乐时光", "f": "unicorns-1.mp3", "a": 0, "n": "greatest.web3"},
+        {"i": 2, "t": "独角兽带来无尽快乐时光", "f": "unicorns-2.mp3", "a": 0, "n": "greatest.web3"}
+    ],
+    "ar": [
+        {"i": 1, "t": "السعادة والبهجة تنشران السلام عبر الكون كله", "f": "unicorns-1.mp3", "a": 0, "n": "greatest.web3"},
+        {"i": 2, "t": "السعادة والبهجة تنشران السلام عبر الكون كله", "f": "unicorns-2.mp3", "a": 0, "n": "greatest.web3"}
+    ],
+    "ja": [
+        {"i": 1, "t": "ユニコーンは楽しくて喜びをくれる", "f": "unicorns-1.mp3", "a": 0, "n": "greatest.web3"},
+        {"i": 2, "t": "ユニコーンは楽しくて喜びをくれる", "f": "unicorns-2.mp3", "a": 0, "n": "greatest.web3"}
+    ],
+    "pl": [
+        {"i": 1, "t": "Szczęście i radość szerzą pokój przez cały wszechś", "f": "unicorns-1.mp3", "a": 0, "n": "greatest.web3"},
+        {"i": 2, "t": "Szczęście i radość szerzą pokój przez cały wszechś", "f": "unicorns-2.mp3", "a": 0, "n": "greatest.web3"}
+    ],
+    "uk": [
+        {"i": 1, "t": "Єдинороги веселі вони приносять нам стільки радост", "f": "unicorns-1.mp3", "a": 0, "n": "greatest.web3"},
+        {"i": 2, "t": "Єдинороги веселі вони приносять нам стільки радост", "f": "unicorns-2.mp3", "a": 0, "n": "greatest.web3"}
+    ],
+    "tr": [
+        {"i": 1, "t": "Tek boynuzlu atlar eğlencelidir bize çok zevk veri", "f": "unicorns-1.mp3", "a": 0, "n": "greatest.web3"},
+        {"i": 2, "t": "Tek boynuzlu atlar eğlencelidir bize çok zevk veri", "f": "unicorns-2.mp3", "a": 0, "n": "greatest.web3"}
+    ],
+    "kz": [
+        {"i": 1, "t": "Мүйізтұмсықтар қызықты олар бізге көп қуаныш сыйла", "f": "unicorns-1.mp3", "a": 0, "n": "greatest.web3"},
+        {"i": 2, "t": "Мүйізтұмсықтар қызықты олар бізге көп қуаныш сыйла", "f": "unicorns-2.mp3", "a": 0, "n": "greatest.web3"}
+    ],
+    "ro": [
+        {"i": 1, "t": "Unicornii sunt veseli ne aduc atâta plăcere", "f": "unicorns-1.mp3", "a": 0, "n": "greatest.web3"},
+        {"i": 2, "t": "Unicornii sunt veseli ne aduc atâta plăcere", "f": "unicorns-2.mp3", "a": 0, "n": "greatest.web3"}
+    ],
+    "hy": [
+        {"i": 1, "t": "Єдинороги веселі вони приносять нам стільки радост", "f": "unicorns-1.mp3", "a": 0, "n": "greatest.web3"},
+        {"i": 2, "t": "Єдинороги веселі вони приносять нам стільки радост", "f": "unicorns-2.mp3", "a": 0, "n": "greatest.web3"}
+    ],
+    "az": [
+        {"i": 1, "t": "Єдинороги веселі вони приносять нам стільки радост", "f": "unicorns-1.mp3", "a": 0, "n": "greatest.web3"},
+        {"i": 2, "t": "Єдинороги веселі вони приносять нам стільки радост", "f": "unicorns-2.mp3", "a": 0, "n": "greatest.web3"}
+    ],
+    "he": [
+        {"i": 1, "t": "Єдинороги веселі вони приносять нам стільки радост", "f": "unicorns-1.mp3", "a": 0, "n": "greatest.web3"},
+        {"i": 2, "t": "Єдинороги веселі вони приносять нам стільки радост", "f": "unicorns-2.mp3", "a": 0, "n": "greatest.web3"}
+    ],
+    "fa": [
+        {"i": 1, "t": "Єдинороги веселі вони приносять нам стільки радост", "f": "unicorns-1.mp3", "a": 0, "n": "greatest.web3"},
+        {"i": 2, "t": "Єдинороги веселі вони приносять нам стільки радост", "f": "unicorns-2.mp3", "a": 0, "n": "greatest.web3"}
     ]
 }
