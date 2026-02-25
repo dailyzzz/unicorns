@@ -430,6 +430,11 @@
       background: rgba(167, 139, 250, 0.15);
       padding: 2px 6px; border-radius: 4px;
     }
+    .track-lang-label {
+      font-size: 0.7rem; color: var(--pastel-pink);
+      background: rgba(244, 114, 182, 0.15);
+      padding: 2px 6px; border-radius: 4px;
+    }
     
     .play-btn-small { width: 32px; height: 32px; font-size: 0.9rem; }
     
@@ -1042,6 +1047,7 @@
       <h1>Unicorns</h1>
       <p class="subtitle">Greatest Of All Time - greatest.web3</p>
       <select class="lang-selector" id="langSelector">
+        <option value="all">All Languages</option>
         <option value="en">English</option>
         <option value="es">Español</option>
         <option value="ru">Русский</option>
@@ -1428,6 +1434,7 @@
   <script>
 const FEATURED_ID = 21;
 const LANG_NAMES = {
+  all: 'All Languages',
   en: 'English',
   es: 'Español',
   ru: 'Русский',
@@ -1539,7 +1546,13 @@ function drawVisualizer() {
 
 // Load tracks
 function loadTracks() {
-  state.tracks = window.TRACKS[state.language] || [];
+  if (state.language === 'all') {
+    state.tracks = Object.entries(window.TRACKS).flatMap(([lang, tracks]) =>
+      tracks.map(t => ({ ...t, lang }))
+    );
+  } else {
+    state.tracks = (window.TRACKS[state.language] || []).map(t => ({ ...t, lang: state.language }));
+  }
   renderTrackList();
   updateTrackCount();
 }
@@ -1562,7 +1575,8 @@ function renderTrackList() {
       <div class="track-number">${track.i}</div>
       <div class="track-title">${track.t}</div>
       ${track.a === 1 ? '<span class="track-alt-label">ALT</span>' : ''}
-      <span class="offline-badge" data-track="tracks-${state.language}-${track.f}" style="display:none">
+      ${state.language === 'all' ? `<span class="track-lang-label">${LANG_NAMES[track.lang] || track.lang}</span>` : ''}
+      <span class="offline-badge" data-track="tracks-${track.lang}-${track.f}" style="display:none">
         <svg width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
           <path d="M10.5 8a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"/>
           <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z"/>
@@ -1570,7 +1584,7 @@ function renderTrackList() {
         Offline
       </span>
       <button class="play-btn-small">${index === state.currentIndex && state.isPlaying ? '⏸' : '▶'}</button>
-      <a href="${state.hostname === '666.web3' ? `${track.d}tracks-${state.language}-${track.f}` : `tracks-${state.language}-${track.f}`}" download="${track.f}" class="download-btn-small" title="Download" onclick="event.stopPropagation()">
+      <a href="${state.hostname === '666.web3' ? `${track.d}tracks-${track.lang}-${track.f}` : `tracks-${track.lang}-${track.f}`}" download="${track.f}" class="download-btn-small" title="Download" onclick="event.stopPropagation()">
         <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
           <path d="M8 12L3 7h3V1h4v6h3z"/>
           <path d="M1 14h14v2H1z"/>
@@ -1611,7 +1625,7 @@ function playTrack(index) {
   function tryLoadAudio() {
     if (currentFallback < fallbackCIDs.length) {
       const cidUrl = fallbackCIDs[currentFallback];
-      audio.src = `${cidUrl}tracks-${state.language}-${track.f}`;
+      audio.src = `${cidUrl}tracks-${track.lang}-${track.f}`;
       console.log(`Attempting to load from CID ${currentFallback + 1}/${fallbackCIDs.length}: ${cidUrl}`);
 
       audio.onerror = function(e) {
@@ -1632,7 +1646,7 @@ function playTrack(index) {
     } else {
       // All CID attempts failed, try relative path as final fallback
       console.log('All CID attempts failed, trying relative path...');
-      audio.src = `tracks-${state.language}-${track.f}`;
+      audio.src = `tracks-${track.lang}-${track.f}`;
       audio.onerror = function(e) {
         console.error('❌ All loading attempts failed for track:', track.f);
       };
@@ -1649,7 +1663,7 @@ function playTrack(index) {
 
   updateTrackInfo();
   renderTrackList();
-  loadLyricsWithFallback(track, state.language, fallbackCIDs);
+  loadLyricsWithFallback(track, track.lang, fallbackCIDs);
   updateUrlParams(index);
   saveState();
 
