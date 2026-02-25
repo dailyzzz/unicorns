@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Antichrist - Music Player</title>
-  <meta name="description" content="Antichrist - The Final Algorithm. Revelation 11 Music For The End Times.">
+  <title>Unicorns - Music Album</title>
+  <meta name="description" content="Unicorns - A Beautiful Treasure. Pop, Dance, Booty Shaker, Hypnotic, Euphoric, Happy, Jazz.">
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#8b0000">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Antichrist">
+  <meta name="apple-mobile-web-app-title" content="unicorns">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="icon" href="favicon.ico">
   <meta http-equiv="Content-Security-Policy" content="media-src 'self' https://*">
@@ -1043,6 +1043,8 @@
       <p class="subtitle">Greatest Of All Time - greatest.web3</p>
       <select class="lang-selector" id="langSelector">
         <option value="en">English</option>
+        <option value="es">Español</option>
+        <option value="ru">Русский</option>
       </select>
       <span class="track-count" id="trackCount">16/9 tracks</span>
     </header>
@@ -1117,9 +1119,9 @@
 
     <div class="download-section">
       <h2 class="download-heading">Download Album</h2>
-      <p class="download-description">Get the complete Antichrist album with all tracks and lyrics</p>
+      <p class="download-description">Get the complete unicorns album with all tracks and lyrics</p>
       <div class="download-grid">
-        <a href="https://www.dropbox.com/scl/fi/acltu285avorozjlln69c/Antichrist.zip?rlkey=4te91chzt4rscmljtbp8h5ge6&st=j8z707ze&dl=0" class="download-card">
+        <a href="https://www.dropbox.com/scl/fi/acltu285avorozjlln69c/unicorns.zip?rlkey=4te91chzt4rscmljtbp8h5ge6&st=j8z707ze&dl=0" class="download-card">
           <div class="download-icon">
             <svg width="40" height="40" fill="currentColor" viewBox="0 0 24 24">
               <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
@@ -1412,7 +1414,9 @@
   <script>
 const FEATURED_ID = 21;
 const LANG_NAMES = {
-  en: 'English'
+  en: 'English',
+  es: 'Español',
+  ru: 'Русский'
 };
 
 const state = {
@@ -1872,7 +1876,7 @@ document.getElementById('lyricsToggle').addEventListener('click', () => {
 // Share buttons
 document.getElementById('shareTwitter').addEventListener('click', () => {
   const url = encodeURIComponent(window.location.href);
-  const text = encodeURIComponent('Check out Antichrist - The Final Algorithm');
+  const text = encodeURIComponent('Check out unicorns - A beautiful treasure');
   window.open(`https://twitter.com/intent/tweet?url=${url}&text=${text}`, '_blank');
 });
 
@@ -1883,7 +1887,7 @@ document.getElementById('shareFacebook').addEventListener('click', () => {
 
 document.getElementById('shareWhatsapp').addEventListener('click', () => {
   const url = encodeURIComponent(window.location.href);
-  const text = encodeURIComponent('Check out Antichrist - The Final Algorithm');
+  const text = encodeURIComponent('Check out unicorns - A beautiful treasure');
   window.open(`https://wa.me/?text=${text}%20${url}`, '_blank');
 });
 
@@ -1904,8 +1908,8 @@ document.getElementById('shareCopy').addEventListener('click', async () => {
 document.getElementById('clearCacheBtn')?.addEventListener('click', async () => {
   if (confirm('Clear all cached audio and lyrics? This will free up space but you\'ll need to re-download tracks for offline use.')) {
     try {
-      await caches.delete('antichrist-v1.0.0-audio');
-      await caches.delete('antichrist-v1.0.0-lyrics');
+      await caches.delete('unicorns-v1.0.0-audio');
+      await caches.delete('unicorns-v1.0.0-lyrics');
       alert('✅ Cache cleared successfully!');
       updateCacheInfo();
       updateOfflineIndicators();
@@ -1917,7 +1921,7 @@ document.getElementById('clearCacheBtn')?.addEventListener('click', async () => 
 
 // State persistence
 function saveState() {
-  localStorage.setItem('antichrist_state', JSON.stringify({
+  localStorage.setItem('unicorns_state', JSON.stringify({
     language: state.language,
     currentIndex: state.currentIndex,
     shuffle: state.shuffle,
@@ -1929,10 +1933,11 @@ function saveState() {
 
 function loadState() {
   try {
-    const saved = localStorage.getItem('antichrist_state');
+    const saved = localStorage.getItem('unicorns_state');
     if (saved) {
       const data = JSON.parse(saved);
       state.language = data.language || 'en';
+      document.getElementById('langSelector').value = state.language;
       state.currentIndex = data.currentIndex || -1;
       state.shuffle = data.shuffle || false;
       state.repeat = data.repeat || 0;
@@ -1997,7 +2002,7 @@ async function updateCacheInfo() {
 async function updateOfflineIndicators() {
   if (!('caches' in window)) return;
   try {
-    const cache = await caches.open('antichrist-v1.0.0-audio');
+    const cache = await caches.open('unicorns-v1.0.0-audio');
     const requests = await cache.keys();
     const cachedFiles = requests.map(req => new URL(req.url).pathname.split('/').pop());
 

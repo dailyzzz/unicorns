@@ -6,5 +6,15 @@
         "4": "unicorns-4.md",
         "5": "unicorns-5.md",
         "6": "unicorns-6.md"
+    },
+    "es": {
+        "1": "unicorns-1.md",
+        "2": "unicorns-2.md"
+    },
+    "ru": {
+        "1": "unicorns-1.md",
+        "2": "unicorns-2.md",
+        "3": "unicorns-3.md",
+        "4": "unicorns-4.md"
     }
 }
